@@ -1,0 +1,48 @@
+[package]
+name = "hyper"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+hyper = {version = "1.5.0", features = ["full"] }
+tokio = { version = "1.41.0", features = ["full"] }
+bytes = "1.2"
+http-body-util = "0.1"
+pin-project-lite =  "0.2.4"
+tower = { version = "0.5.1", features = ["full"] }
+hyper-util = { version = "0.1.9", features = ["full"] }
+
+[[bin]]
+name = "hyper_server"
+path = "src/hyper_server.rs"
+
+[[bin]]
+name = "hyper_client"
+path = "src/hyper_client.rs"
+
+[[bin]]
+name = "hyper_middleware"
+path = "src/hyper_middleware.rs"
+
+[[bin]]
+name = "hyper_middleware_ext"
+path = "src/hyper_middleware_ext.rs"
+
+[[bin]]
+name = "hyper_shutdown"
+path = "src/hyper_shutdown.rs"
+
+#########################################################################3
+
+[[bin]]
+name = "pin_enum"
+path = "src/pin_enum.rs"
+
+[[bin]]
+name = "pin_ss"
+path = "src/pin_ss.rs"
+
+[[bin]]
+name = "pin_ss_ext"
+path = "src/pin_ss_ext.rs"
