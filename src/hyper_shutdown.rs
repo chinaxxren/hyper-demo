@@ -36,7 +36,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let listener = TcpListener::bind(addr).await?;
     // 指定我们的 HTTP 设置（http1、http2、自动全部工作）
     let http = http1::Builder::new();
-    // 优雅的观察者
+    // 优雅的关机观察者
     let graceful = hyper_util::server::graceful::GracefulShutdown::new();
     // 当该信号完成时，开始关闭
     let mut signal = std::pin::pin!(shutdown_signal());
@@ -47,7 +47,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
             Ok((stream, _addr)) = listener.accept() => {
                 let io = TokioIo::new(stream);
                 let conn = http.serve_connection(io, service_fn(hello));
-                // 观看此连接
+                // 此连接添加入观察中
                 let fut = graceful.watch(conn);
                 tokio::spawn(async move {
                     if let Err(e) = fut.await {
