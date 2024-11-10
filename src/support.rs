@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-//! Various runtimes for hyper
+//！ hyper 的各种运行时
 use std::{
     future::Future,
     pin::Pin,
@@ -10,8 +10,8 @@ use std::{
 use hyper::rt::{Sleep, Timer};
 use pin_project_lite::pin_project;
 
+/// 使用 tokio 运行时的执行器。
 #[derive(Clone)]
-/// An Executor that uses the tokio runtime.
 pub struct TokioExecutor;
 
 impl<F> hyper::rt::Executor<F> for TokioExecutor
@@ -24,8 +24,7 @@ where
     }
 }
 
-/// A Timer that uses the tokio runtime.
-
+///使用 tokio 运行时的计时器。
 #[derive(Clone, Debug)]
 pub struct TokioTimer;
 
@@ -50,14 +49,14 @@ impl Timer for TokioTimer {
 }
 
 impl TokioTimer {
-    /// Create a new TokioTimer
+    /// 创建一个新的 TokioTimer
     pub fn new() -> Self {
         Self {}
     }
 }
 
-// Use TokioSleep to get tokio::time::Sleep to implement Unpin.
-// see https://docs.rs/tokio/latest/tokio/time/struct.Sleep.html
+// 使用 TokioSleep 获取 tokio::time::Sleep 来实现 Unpin。
+// 请参阅https://docs.rs/tokio/latest/tokio/time/struct.Sleep.html
 pin_project! {
     pub(crate) struct TokioSleep {
         #[pin]
@@ -168,7 +167,7 @@ where
         cx: &mut Context<'_>,
         tbuf: &mut tokio::io::ReadBuf<'_>,
     ) -> Poll<Result<(), std::io::Error>> {
-        //let init = tbuf.initialized().len();
+        //让 init = tbuf.initialized().len();
         let filled = tbuf.filled().len();
         let sub_filled = unsafe {
             let mut buf = hyper::rt::ReadBuf::uninit(tbuf.unfilled_mut());
@@ -180,7 +179,7 @@ where
         };
 
         let n_filled = filled + sub_filled;
-        // At least sub_filled bytes had to have been initialized.
+        // 至少必须初始化 sub_filled 字节。
         let n_init = sub_filled;
         unsafe {
             tbuf.assume_init(n_init);
