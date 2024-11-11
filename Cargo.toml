@@ -12,6 +12,7 @@ http-body-util = "0.1"
 pin-project-lite =  "0.2.4"
 tower = { version = "0.5.1", features = ["full"] }
 hyper-util = { version = "0.1.9", features = ["full"] }
+tokio-tungstenite = "0.24.0"
 
 [[bin]]
 name = "hyper_server"
@@ -32,6 +33,10 @@ path = "src/hyper_middleware_ext.rs"
 [[bin]]
 name = "hyper_shutdown"
 path = "src/hyper_shutdown.rs"
+
+[[bin]]
+name = "hyper_upgrade"
+path = "src/hyper_upgrade.rs"
 
 #########################################################################3
 
